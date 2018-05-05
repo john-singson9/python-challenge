@@ -1,10 +1,15 @@
+#import the modules
 import os
 import csv
 
-PyBosscsvpath = os.path.join("/Users/johnsingson/Desktop/UTAUS201804DATA2-Class-Repository-DATA/03-Python/HOMEWORK/Instructions/PyBoss/raw_data/employee_data2.csv")
+#find and join the path (choose one of the data sets)
+PyBosscsvpath = os.path.join("/Users/johnsingson/Desktop/UTAUS201804DATA2-Class-Repository-DATA/03-Python/HOMEWORK/Instructions/PyBoss/raw_data/employee_data1.csv")
+#PyBosscsvpath = os.path.join("/Users/johnsingson/Desktop/UTAUS201804DATA2-Class-Repository-DATA/03-Python/HOMEWORK/Instructions/PyBoss/raw_data/employee_data2.csv")
 
+#create an array for the new employee csv
 new_employee_Data = []
 
+#open the csv file
 with open(PyBosscsvpath) as csvfile:
     csvreader = csv.DictReader(csvfile)
     for row in csvreader:
@@ -14,15 +19,15 @@ with open(PyBosscsvpath) as csvfile:
         full_name = row["Name"]
         first_name = full_name.split()[0]
         last_name = full_name.split()[1]
-        #Date of Birth
+        #Changing the Date of Birth format
         year = row["DOB"].split("-")[0]
         month = row["DOB"].split("-")[1]
         date = row["DOB"].split("-")[2]
         DOB = f"{month}/{date}/{year}"
-        #Social Security Number
+        #Changing Social Security Number format
         SSN = row["SSN"].split("-")[2]
         right_SSN = f"***-**-{SSN}"
-        #State
+        #Changing State format
         state = row["State"]
         us_state_abbrev = {
                 'Alabama': 'AL',
@@ -80,6 +85,7 @@ with open(PyBosscsvpath) as csvfile:
             if state == key:
                 state = value
 
+        #append the array with new employee files
         new_employee_Data.append(
             {
                 "Emp ID": emp_ID,
@@ -91,6 +97,7 @@ with open(PyBosscsvpath) as csvfile:
             }
         )
 
+#grab the filename from the original
 _, filename = os.path.split(PyBosscsvpath)
 
 # Write updated data to csv file
